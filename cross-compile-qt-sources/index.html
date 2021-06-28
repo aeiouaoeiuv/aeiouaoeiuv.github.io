@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aeiouaoeiuv.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Desc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cross-compile-qt-sources">
+<meta property="og:url" content="https://aeiouaoeiuv.github.io/cross-compile-qt-sources/index.html">
+<meta property="og:site_name" content="aeiouaoeiuv">
+<meta property="og:description" content="Desc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-07T21:22:50.000Z">
+<meta property="article:modified_time" content="2021-06-28T01:46:50.917Z">
+<meta property="article:author" content="aeiouaoeiuv">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="qt">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://aeiouaoeiuv.github.io/cross-compile-qt-sources/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>cross-compile-qt-sources | aeiouaoeiuv</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">aeiouaoeiuv</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-markdown">
+
+    <a href="/mde/" rel="section"><i class="fa fa-edit fa-fw"></i>Markdown</a>
+
+  </li>
+        <li class="menu-item menu-item-asciiflow">
+
+    <a href="/asciiflow/" rel="section"><i class="fa fa-font fa-fw"></i>AsciiFlow</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Desc"><span class="nav-number">1.</span> <span class="nav-text">Desc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Env"><span class="nav-number">2.</span> <span class="nav-text">Env</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Depends"><span class="nav-number">3.</span> <span class="nav-text">Depends</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Build"><span class="nav-number">4.</span> <span class="nav-text">Build</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runtime-Env"><span class="nav-number">5.</span> <span class="nav-text">Runtime Env</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="aeiouaoeiuv"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">aeiouaoeiuv</p>
+  <div class="site-description" itemprop="description">F4F6D30C9442A4F3</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aeiouaoeiuv.github.io/cross-compile-qt-sources/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="aeiouaoeiuv">
+      <meta itemprop="description" content="F4F6D30C9442A4F3">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aeiouaoeiuv">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cross-compile-qt-sources
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-07 21:22:50" itemprop="dateCreated datePublished" datetime="2019-07-07T21:22:50+00:00">2019-07-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-28 01:46:50" itemprop="dateModified" datetime="2021-06-28T01:46:50+00:00">2021-06-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Desc"><a href="#Desc" class="headerlink" title="Desc"></a>Desc</h1><a id="more"></a>
+
+<p>  <code>qt-everywhere-opensource-src-5.9.8.tar.xz</code>是源码包，可编译出<code>qmake</code>工具，用于交叉编译 QT 程序，适用于交叉编译 QT 程序以放入开发板运行。<br>  <code>qt-opensource-linux-x64-5.9.8.run</code>是 linux 程序，执行安装出 QtCreator 和 x86_64 的 qmake 程序，适用于在 linux 系统上开发 QT。</p>
+<h1 id="Env"><a href="#Env" class="headerlink" title="Env"></a>Env</h1>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$PATH:$HOME&#x2F;sysroots&#x2F;x86_64-linux&#x2F;usr&#x2F;bin&#x2F;arm-oe-linux-gnueabi</span><br><span class="line">export SYSROOT_PATH&#x3D;$HOME&#x2F;sysroots&#x2F;mdm9607</span><br></pre></td></tr></table></figure>
+<h1 id="Depends"><a href="#Depends" class="headerlink" title="Depends"></a>Depends</h1><p>  由于下面的编译步骤依赖了<code>freetype</code>和<code>tslib</code>两个库，所以需要提前编译该依赖库。<br>  编译步骤可参考：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/aeiouaoeiuv/recipes/master/shell/build_minigui_with_tslib.sh">this</a></p>
+<h1 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h1><p>  <code>cd $HOME/qt-everywhere-opensource-src-5.9.8/qtbase/mkspecs/</code><br>  <code>cp -rf linux-arm-gnueabi-g++ arm-oe-linux-gnueabi-g++</code></p>
+  <figure class="highlight patch"><figcaption><span>arm-oe-linux-gnueabi-g++/qmake.conf</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- a/qmake.conf</span></span><br><span class="line"><span class="comment">+++ b/qmake.conf</span></span><br><span class="line"><span class="meta">@@ -11,14 +11,14 @@</span></span><br><span class="line"> include(../common/g++-unix.conf)</span><br><span class="line"></span><br><span class="line"> # modifications to g++.conf</span><br><span class="line"><span class="deletion">-QMAKE_CC                = arm-linux-gnueabi-gcc</span></span><br><span class="line"><span class="deletion">-QMAKE_CXX               = arm-linux-gnueabi-g++</span></span><br><span class="line"><span class="deletion">-QMAKE_LINK              = arm-linux-gnueabi-g++</span></span><br><span class="line"><span class="deletion">-QMAKE_LINK_SHLIB        = arm-linux-gnueabi-g++</span></span><br><span class="line"><span class="addition">+QMAKE_CC                = arm-oe-linux-gnueabi-gcc</span></span><br><span class="line"><span class="addition">+QMAKE_CXX               = arm-oe-linux-gnueabi-g++</span></span><br><span class="line"><span class="addition">+QMAKE_LINK              = arm-oe-linux-gnueabi-g++</span></span><br><span class="line"><span class="addition">+QMAKE_LINK_SHLIB        = arm-oe-linux-gnueabi-g++</span></span><br><span class="line"></span><br><span class="line"> # modifications to linux.conf</span><br><span class="line"><span class="deletion">-QMAKE_AR                = arm-linux-gnueabi-ar cqs</span></span><br><span class="line"><span class="deletion">-QMAKE_OBJCOPY           = arm-linux-gnueabi-objcopy</span></span><br><span class="line"><span class="deletion">-QMAKE_NM                = arm-linux-gnueabi-nm -P</span></span><br><span class="line"><span class="deletion">-QMAKE_STRIP             = arm-linux-gnueabi-strip</span></span><br><span class="line"><span class="addition">+QMAKE_AR                = arm-oe-linux-gnueabi-ar cqs</span></span><br><span class="line"><span class="addition">+QMAKE_OBJCOPY           = arm-oe-linux-gnueabi-objcopy</span></span><br><span class="line"><span class="addition">+QMAKE_NM                = arm-oe-linux-gnueabi-nm -P</span></span><br><span class="line"><span class="addition">+QMAKE_STRIP             = arm-oe-linux-gnueabi-strip</span></span><br><span class="line"> load(qt_config)</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><figcaption><span>$HOME/qt-everywhere-opensource-src-5.9.8/</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">-prefix <span class="variable">$HOME</span>/.<span class="built_in">local</span> \</span><br><span class="line">-extprefix <span class="variable">$HOME</span>/.<span class="built_in">local</span> \</span><br><span class="line">-examplesdir <span class="variable">$HOME</span>/.<span class="built_in">local</span>/qtexamples \</span><br><span class="line">-confirm-license \</span><br><span class="line">-opensource \</span><br><span class="line">-shared \</span><br><span class="line">-release  \</span><br><span class="line">-make libs \</span><br><span class="line">-xplatform arm-oe-linux-gnueabi-g++ \</span><br><span class="line">-sysroot <span class="variable">$SYSROOT_PATH</span> \</span><br><span class="line">-gcc-sysroot \</span><br><span class="line">-optimized-qmake \</span><br><span class="line">-system-freetype \</span><br><span class="line">-pch \</span><br><span class="line">-qt-libjpeg \</span><br><span class="line">-qt-libpng \</span><br><span class="line">-qt-zlib \</span><br><span class="line">-no-opengl \</span><br><span class="line">-no-sse2 \</span><br><span class="line">-no-openssl \</span><br><span class="line">-no-cups \</span><br><span class="line">-no-glib \</span><br><span class="line">-no-dbus \</span><br><span class="line">-no-xcb \</span><br><span class="line">-no-separate-debug-info \</span><br><span class="line">-no-fontconfig \</span><br><span class="line">-nomake tools \</span><br><span class="line">-nomake tests \</span><br><span class="line">-no-iconv \</span><br><span class="line">-compile-examples \</span><br><span class="line">-tslib \</span><br><span class="line">-I<span class="variable">$SYSROOT_PATH</span>/include \</span><br><span class="line">-I<span class="variable">$SYSROOT_PATH</span>/include/freetype2 \</span><br><span class="line">-L<span class="variable">$SYSROOT_PATH</span>/lib</span><br></pre></td></tr></table></figure>
+<p>  <code>make &amp;&amp; make install</code> (这里-extprefix 才是实际安装的路径, -prefix 可以指定跟-extprefix 一致)</p>
+<h1 id="Runtime-Env"><a href="#Runtime-Env" class="headerlink" title="Runtime Env"></a>Runtime Env</h1><p>  下面是运行时的一些环境变量，仅供参考<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH&#x3D;&#x2F;cache&#x2F;qt5&#x2F;lib:&#x2F;cache&#x2F;install&#x2F;lib:&#x2F;usr&#x2F;lib:&#x2F;lib:$LD_LIBRARY_PATH</span><br><span class="line">export QT_DEBUG_PLUGINS&#x3D;0</span><br><span class="line">export QT_QPA_FONTDIR&#x3D;&#x2F;cache&#x2F;qt5&#x2F;font</span><br><span class="line">export QT_QPA_PLATFORM_PLUGIN_PATH&#x3D;&#x2F;cache&#x2F;qt5&#x2F;plugins&#x2F;</span><br><span class="line">export QT_QPA_PLATFORM&#x3D;linuxfb:fb&#x3D;&#x2F;dev&#x2F;fb0:size&#x3D;320x240:mmSize&#x3D;320x240:offset&#x3D;0x0:tty&#x3D;&#x2F;dev&#x2F;tty0</span><br><span class="line">export QT_QPA_GENERIC_PLUGINS&#x3D;evdevtouch:&#x2F;dev&#x2F;input&#x2F;event1</span><br><span class="line">export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS&#x3D;&#x2F;dev&#x2F;input&#x2F;event1:rotate&#x3D;0</span><br><span class="line">export QT_QPA_FB_TSLIB&#x3D;1</span><br><span class="line">export TSLIB_TSDEVICE&#x3D;&#x2F;dev&#x2F;input&#x2F;event1</span><br><span class="line">export TSLIB_CALIBFILE&#x3D;&#x2F;cache&#x2F;pointercal</span><br><span class="line">export TSLIB_CONFFILE&#x3D;&#x2F;cache&#x2F;ts.conf</span><br><span class="line">export TSLIB_PLUGINDIR&#x3D;&#x2F;cache&#x2F;install&#x2F;lib&#x2F;ts</span><br><span class="line">export TSLIB_CONSOLEDEVICE&#x3D;none</span><br><span class="line">export TSLIB_FBDEVICE&#x3D;&#x2F;dev&#x2F;fb0</span><br><span class="line">export LD_PRELOAD&#x3D;&#x2F;cache&#x2F;install&#x2F;lib&#x2F;libts.so</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/qt/" rel="tag"># qt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/shell-variables/" rel="prev" title="shell-variables">
+                  <i class="fa fa-chevron-left"></i> shell-variables
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/fire-up-sshd-in-git-bash/" rel="next" title="fire-up-sshd-in-git-bash">
+                  fire-up-sshd-in-git-bash <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">aeiouaoeiuv</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
