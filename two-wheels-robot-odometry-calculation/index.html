@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="5AUIVYTbHIAuz-eQtxSfZbWW5eg9_EVZMSQycIuXrG0">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"aeiouaoeiuv.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.11.0","exturl":true,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/config.min.js"></script>
+
+    <meta name="description" content="两轮差速里程计需要计算出：odom_x, odom_y和odom_phi。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="two-wheels-robot-odometry-calculation">
+<meta property="og:url" content="https://aeiouaoeiuv.github.io/two-wheels-robot-odometry-calculation/index.html">
+<meta property="og:site_name" content="aeiouaoeiuv">
+<meta property="og:description" content="两轮差速里程计需要计算出：odom_x, odom_y和odom_phi。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-11T09:47:51.000Z">
+<meta property="article:modified_time" content="2023-02-05T02:51:12.436Z">
+<meta property="article:author" content="aeiouaoeiuv">
+<meta property="article:tag" content="robot">
+<meta property="article:tag" content="odometry">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://aeiouaoeiuv.github.io/two-wheels-robot-odometry-calculation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://aeiouaoeiuv.github.io/two-wheels-robot-odometry-calculation/","path":"two-wheels-robot-odometry-calculation/","title":"two-wheels-robot-odometry-calculation"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>two-wheels-robot-odometry-calculation | aeiouaoeiuv</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108155018-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108155018-3","only_pageview":false}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/analytics/google-analytics.min.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">aeiouaoeiuv</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-asciiflow"><a href="/asciiflow/" rel="section"><i class="fa fa-font fa-fw"></i>AsciiFlow</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E8%AE%BE"><span class="nav-number">1.</span> <span class="nav-text">预设</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E5%8F%B3%E8%BD%AE%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">左右轮编码器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97-odom-phi"><span class="nav-number">2.</span> <span class="nav-text">计算 odom_phi</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97-odom-x-%E5%92%8C-odom-y"><span class="nav-number">3.</span> <span class="nav-text">计算 odom_x 和 odom_y</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="aeiouaoeiuv"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">aeiouaoeiuv</p>
+  <div class="site-description" itemprop="description">F4F6D30C9442A4F3</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aeiouaoeiuv.github.io/two-wheels-robot-odometry-calculation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="aeiouaoeiuv">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aeiouaoeiuv">
+      <meta itemprop="description" content="F4F6D30C9442A4F3">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="two-wheels-robot-odometry-calculation | aeiouaoeiuv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          two-wheels-robot-odometry-calculation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-11 09:47:51" itemprop="dateCreated datePublished" datetime="2022-04-11T09:47:51+00:00">2022-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c-c/" itemprop="url" rel="index"><span itemprop="name">c/c++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>两轮差速里程计需要计算出：<code>odom_x</code>, <code>odom_y</code>和<code>odom_phi</code>。</p>
+<span id="more"></span>
+
+<h1 id="预设"><a href="#预设" class="headerlink" title="预设"></a>预设</h1><p>需要提前获知机器人的参数有：</p>
+<ul>
+<li>左右轮编码器：<code>encoder_left</code>和<code>encoder_right</code></li>
+<li>左右轮的直径：<code>R</code></li>
+<li>传动比：<code>gear_ratio</code></li>
+<li>脉冲数：<code>pulse</code></li>
+<li>两轮的间距：<code>two_wheel_distance</code></li>
+<li>底盘上报数据的频率间隔固定：<code>delta_second</code>，单位秒</li>
+</ul>
+<div class="note info"><h4 id="左右轮编码器"><a href="#左右轮编码器" class="headerlink" title="左右轮编码器"></a>左右轮编码器</h4><p>也就是左右轮的脉冲数，假设编码器的值不是累加的，即，机器停止后编码器值归零。</p>
+</div>
+
+<h1 id="计算-odom-phi"><a href="#计算-odom-phi" class="headerlink" title="计算 odom_phi"></a>计算 odom_phi</h1><p>计算出每个时间间隔内，左右轮编码的差值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto diff_encoder_left; // 包含正负</span><br><span class="line">auto diff_encoder_right;// 包含正负</span><br></pre></td></tr></table></figure>
+
+<p>计算单个脉冲行走的距离：<code>左右轮直径 * M_PI / 传动比 / 脉冲数</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto pulse_length = R * M_PI / gear_ratio / pulse;</span><br></pre></td></tr></table></figure>
+
+<p>分别计算出左右轮的线速度：<code>单个脉冲行走距离 * 轮子走过的脉冲数 / 时间差</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto left_wheel_velocity = pulse_length * diff_encoder_left / delta_second;</span><br><span class="line">auto right_wheel_velocity = pulse_length * diff_encoder_right / delta_second;</span><br></pre></td></tr></table></figure>
+
+<p>计算角速度：<code>(右轮线速度 - 左轮角速度) / 两轮间距</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto angle_velocity = (right_wheel_velocity - left_wheel_velocity) / two_wheel_distance</span><br></pre></td></tr></table></figure>
+
+<p>计算单位时间内转过的角度：<code>角速度 * 时间差</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto delta_phi = angle_velocity * delta_second;</span><br></pre></td></tr></table></figure>
+
+<p>最后计算角度：<code>delta_phi的积分，注意归一化</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">odom_phi += delta_phi;</span><br><span class="line">最后将odom_phi归一化</span><br></pre></td></tr></table></figure>
+
+<h1 id="计算-odom-x-和-odom-y"><a href="#计算-odom-x-和-odom-y" class="headerlink" title="计算 odom_x 和 odom_y"></a>计算 odom_x 和 odom_y</h1><p>在上面计算的基础上，计算机器的平均线速度：<code>(左轮线速度 + 右轮线速度) / 2</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto linear_velocity = (left_wheel_velocity + right_wheel_velocity) / 2</span><br></pre></td></tr></table></figure>
+
+<p>计算坐标<code>x</code>和<code>y</code>在单位时间内的变化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delta_x = linear_velocity * delta_second * cos(odom_phi_);</span><br><span class="line">delta_y = linear_velocity * delta_second * sin(odom_phi_);</span><br></pre></td></tr></table></figure>
+
+<p>最后计算<code>odom_x</code>和<code>odom_y</code>：<code>delta_x</code>和<code>delta_y</code>分别做积分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">odom_x_ += delta_x;</span><br><span class="line">odom_y_ += delta_y;</span><br></pre></td></tr></table></figure>
+
+<blockquote><footer><strong>参考1</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2p1c3RfZG9faXQ1NjcvYXJ0aWNsZS9kZXRhaWxzLzEwNzU2MjM3MQ==">blog.csdn.net/just_do_it567/article/details/107562371<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+<blockquote><footer><strong>参考2</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpbmdkb3U1MjAvYXJ0aWNsZS9kZXRhaWxzLzgzNjkxOTUx">blog.csdn.net/xingdou520/article/details/83691951<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/robot/" rel="tag"># robot</a>
+              <a href="/tags/odometry/" rel="tag"># odometry</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/v2ray-usage-in-ubuntu/" rel="prev" title="v2ray-usage-in-ubuntu">
+                  <i class="fa fa-chevron-left"></i> v2ray-usage-in-ubuntu
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/trojan-usage-in-ubuntu/" rel="next" title="trojan-usage-in-ubuntu">
+                  trojan-usage-in-ubuntu <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NexT</span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js","integrity":"sha256-7wT34TI0pEBeEFoi4z+vhuSddGh6vUTMWdqJ2SDe2jg="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/tags/mermaid.min.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/math/mathjax.min.js"></script>
+
+
+
+</body>
+</html>

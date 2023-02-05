@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="5AUIVYTbHIAuz-eQtxSfZbWW5eg9_EVZMSQycIuXrG0">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"aeiouaoeiuv.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.11.0","exturl":true,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/config.min.js"></script>
+
+    <meta name="description" content="tcp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="socket-programme-in-c">
+<meta property="og:url" content="https://aeiouaoeiuv.github.io/socket-programme-in-c/index.html">
+<meta property="og:site_name" content="aeiouaoeiuv">
+<meta property="og:description" content="tcp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-12T20:24:48.000Z">
+<meta property="article:modified_time" content="2023-02-05T02:51:12.432Z">
+<meta property="article:author" content="aeiouaoeiuv">
+<meta property="article:tag" content="socket">
+<meta property="article:tag" content="tcp">
+<meta property="article:tag" content="udp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://aeiouaoeiuv.github.io/socket-programme-in-c/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://aeiouaoeiuv.github.io/socket-programme-in-c/","path":"socket-programme-in-c/","title":"socket-programme-in-c"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>socket-programme-in-c | aeiouaoeiuv</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108155018-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108155018-3","only_pageview":false}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/analytics/google-analytics.min.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">aeiouaoeiuv</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-asciiflow"><a href="/asciiflow/" rel="section"><i class="fa fa-font fa-fw"></i>AsciiFlow</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp"><span class="nav-number">1.</span> <span class="nav-text">tcp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#udp"><span class="nav-number">2.</span> <span class="nav-text">udp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AF-amp-PF"><span class="nav-number">3.</span> <span class="nav-text">AF &amp; PF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sockaddr"><span class="nav-number">4.</span> <span class="nav-text">sockaddr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sockaddr-in"><span class="nav-number">5.</span> <span class="nav-text">sockaddr_in</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sockaddr-un"><span class="nav-number">6.</span> <span class="nav-text">sockaddr_un</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="aeiouaoeiuv"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">aeiouaoeiuv</p>
+  <div class="site-description" itemprop="description">F4F6D30C9442A4F3</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aeiouaoeiuv.github.io/socket-programme-in-c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="aeiouaoeiuv">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aeiouaoeiuv">
+      <meta itemprop="description" content="F4F6D30C9442A4F3">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="socket-programme-in-c | aeiouaoeiuv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          socket-programme-in-c
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-12 20:24:48" itemprop="dateCreated datePublished" datetime="2019-03-12T20:24:48+00:00">2019-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c-c/" itemprop="url" rel="index"><span itemprop="name">c/c++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="tcp"><a href="#tcp" class="headerlink" title="tcp"></a>tcp</h1><span id="more"></span>
+
+<p><code>SOCK_STREAM</code> : 数据流，使用 <code>tcp</code> 协议，保证传输正确性和顺序性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌────────┐               ┌────────┐</span><br><span class="line">│ Server │               │ Client │</span><br><span class="line">├────────┘               └────────┤</span><br><span class="line">│                                 │</span><br><span class="line">├ socket()               socket() ┤</span><br><span class="line">│                                 │</span><br><span class="line">├ bind()                          │</span><br><span class="line">│                                 │</span><br><span class="line">├ listen()                        │</span><br><span class="line">│                                 │</span><br><span class="line">├ accept()              connect() ┤</span><br><span class="line">│                                 │</span><br><span class="line">│---------------------------------│</span><br><span class="line">│                                 │</span><br><span class="line">├ recv()                   send() ┤</span><br><span class="line">│                                 │</span><br><span class="line">├ send()                   recv() ┤</span><br><span class="line">│                                 │</span><br><span class="line">│---------------------------------│</span><br><span class="line">│                                 │</span><br><span class="line">├ close()                 close() ┤</span><br><span class="line">│                                 │</span><br></pre></td></tr></table></figure>
+
+<blockquote><footer><strong>tcp client</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FlaW91YW9laXV2L3JlY2lwZXMvYmxvYi9tYXN0ZXIvY19jcHAvdGNwX2NsaWVudC5j">github.com/aeiouaoeiuv/recipes/blob/master/c_cpp/tcp_client.c<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+<blockquote><footer><strong>tcp server</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FlaW91YW9laXV2L3JlY2lwZXMvYmxvYi9tYXN0ZXIvY19jcHAvdGNwX3NlcnZlci5j">github.com/aeiouaoeiuv/recipes/blob/master/c_cpp/tcp_server.c<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+<h1 id="udp"><a href="#udp" class="headerlink" title="udp"></a>udp</h1><p><code>SOCK_DGRAM</code> : 数据报，使用 <code>udp</code> 协议，数据相互独立且无序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌────────┐               ┌────────┐</span><br><span class="line">│ Server │               │ Client │</span><br><span class="line">├────────┘               └────────┤</span><br><span class="line">│                                 │</span><br><span class="line">├ socket()               socket() ┤</span><br><span class="line">│                                 │</span><br><span class="line">├ bind()                          │</span><br><span class="line">│                                 │</span><br><span class="line">│---------------------------------│</span><br><span class="line">│                                 │</span><br><span class="line">├ recvfrom()             sendto() ┤</span><br><span class="line">│                                 │</span><br><span class="line">├ sendto()             recvfrom() ┤</span><br><span class="line">│                                 │</span><br><span class="line">│---------------------------------│</span><br><span class="line">│                                 │</span><br><span class="line">├ close()                 close() ┤</span><br><span class="line">│                                 │</span><br></pre></td></tr></table></figure>
+
+<blockquote><footer><strong>udp client</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FlaW91YW9laXV2L3JlY2lwZXMvYmxvYi9tYXN0ZXIvY19jcHAvdWRwX2NsaWVudC5j">github.com/aeiouaoeiuv/recipes/blob/master/c_cpp/udp_client.c<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+<blockquote><footer><strong>udp server</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FlaW91YW9laXV2L3JlY2lwZXMvYmxvYi9tYXN0ZXIvY19jcHAvdWRwX3NlcnZlci5j">github.com/aeiouaoeiuv/recipes/blob/master/c_cpp/udp_server.c<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+<h1 id="AF-amp-PF"><a href="#AF-amp-PF" class="headerlink" title="AF &amp; PF"></a>AF &amp; PF</h1><ul>
+<li><code>AF</code> : <code>Address Family</code></li>
+<li><code>PF</code> : <code>Protocol Family</code></li>
+</ul>
+<p>如 : <code>AF_INET</code> 和 <code>PF_INET</code> 的值是一样的，对于 <code>BSD</code> 是 <code>AF</code>； <code>POSIX</code> 是 <code>PF</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># from [man 2 socket]</span><br><span class="line"></span><br><span class="line">Name                Purpose                          Man page</span><br><span class="line">AF_UNIX, AF_LOCAL   Local communication              unix(7)</span><br><span class="line">AF_INET             IPv4 Internet protocols          ip(7)</span><br><span class="line">AF_INET6            IPv6 Internet protocols          ipv6(7)</span><br><span class="line">AF_IPX              IPX - Novell protocols</span><br><span class="line">AF_NETLINK          Kernel user interface device     netlink(7)</span><br><span class="line">AF_X25              ITU-T X.25 / ISO-8208 protocol   x25(7)</span><br><span class="line">AF_AX25             Amateur radio AX.25 protocol</span><br><span class="line">AF_ATMPVC           Access to raw ATM PVCs</span><br><span class="line">AF_APPLETALK        Appletalk                        ddp(7)</span><br><span class="line">AF_PACKET           Low level packet interface       packet(7)</span><br></pre></td></tr></table></figure>
+
+<h1 id="sockaddr"><a href="#sockaddr" class="headerlink" title="sockaddr"></a>sockaddr</h1><p>它的作用只是用来强制转换，以避免编译告警。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// from [man 2 bind]</span><br><span class="line"></span><br><span class="line">struct sockaddr &#123;</span><br><span class="line">    sa_family_t        sa_family;                /* address family, AF_xxx */</span><br><span class="line">    char               sa_data[14];              /* 14 bytes of protocol address */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="sockaddr-in"><a href="#sockaddr-in" class="headerlink" title="sockaddr_in"></a>sockaddr_in</h1><p>网络编程使用该结构体，需强制类型转换为 <code>sockaddr</code> 以避免编译告警。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// from [man 7 ip]</span><br><span class="line"></span><br><span class="line">struct sockaddr_in &#123;</span><br><span class="line">    sa_family_t        sin_family;               /* address family: AF_INET */</span><br><span class="line">    in_port_t          sin_port;                 /* port in network byte order */</span><br><span class="line">    struct in_addr     sin_addr;                 /* internet address */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/* Internet address. */</span><br><span class="line">struct in_addr &#123;</span><br><span class="line">    uint32_t           s_addr;                   /* address in network byte order */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="sockaddr-un"><a href="#sockaddr-un" class="headerlink" title="sockaddr_un"></a>sockaddr_un</h1><p>本地进程间通信使用该结构体，需强制类型转换为 <code>sockaddr</code> 以避免编译告警。</p>
+<p>e.g. : <code>socket(AF_UNIX/AF_LOCAL, SOCK_STREAM/SOCK_DGRAM, 0)</code> ，不应使用 <code>AF_INET/PF_INET</code> 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// from [man 7 unix]</span><br><span class="line"></span><br><span class="line">#define UNIX_PATH_MAX  108</span><br><span class="line"></span><br><span class="line">struct sockaddr_un &#123;</span><br><span class="line">    sa_family_t        sun_family;               /* AF_UNIX */</span><br><span class="line">    char               sun_path[UNIX_PATH_MAX];  /* pathname */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/socket/" rel="tag"># socket</a>
+              <a href="/tags/tcp/" rel="tag"># tcp</a>
+              <a href="/tags/udp/" rel="tag"># udp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tc-htb/" rel="prev" title="tc-htb">
+                  <i class="fa fa-chevron-left"></i> tc-htb
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/cross-compile-alexa-voice-device-sdk/" rel="next" title="cross-compile-alexa-voice-device-sdk">
+                  cross-compile-alexa-voice-device-sdk <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NexT</span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js","integrity":"sha256-7wT34TI0pEBeEFoi4z+vhuSddGh6vUTMWdqJ2SDe2jg="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/tags/mermaid.min.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/math/mathjax.min.js"></script>
+
+
+
+</body>
+</html>

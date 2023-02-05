@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="5AUIVYTbHIAuz-eQtxSfZbWW5eg9_EVZMSQycIuXrG0">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"aeiouaoeiuv.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.11.0","exturl":true,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/config.min.js"></script>
+
+    <meta name="description" content="datasheet: MT7628_ProgrammingGuide_20140428(E2).pdf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="get-register-value-in-mtk-openwrt">
+<meta property="og:url" content="https://aeiouaoeiuv.github.io/get-register-value-in-mtk-openwrt/index.html">
+<meta property="og:site_name" content="aeiouaoeiuv">
+<meta property="og:description" content="datasheet: MT7628_ProgrammingGuide_20140428(E2).pdf">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-07-06T16:50:33.000Z">
+<meta property="article:modified_time" content="2023-02-05T02:51:12.432Z">
+<meta property="article:author" content="aeiouaoeiuv">
+<meta property="article:tag" content="openwrt">
+<meta property="article:tag" content="register">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://aeiouaoeiuv.github.io/get-register-value-in-mtk-openwrt/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://aeiouaoeiuv.github.io/get-register-value-in-mtk-openwrt/","path":"get-register-value-in-mtk-openwrt/","title":"get-register-value-in-mtk-openwrt"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>get-register-value-in-mtk-openwrt | aeiouaoeiuv</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108155018-3"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108155018-3","only_pageview":false}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/analytics/google-analytics.min.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">aeiouaoeiuv</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-asciiflow"><a href="/asciiflow/" rel="section"><i class="fa fa-font fa-fw"></i>AsciiFlow</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AF%84%E5%AD%98%E5%99%A8%E7%89%A9%E7%90%86BASE%E5%9C%B0%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">确定寄存器物理BASE地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AF%84%E5%AD%98%E5%99%A8%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="nav-number">2.</span> <span class="nav-text">确定寄存器物理地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AF%84%E5%AD%98%E5%99%A8%E8%99%9A%E6%8B%9FBASE%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">确定寄存器虚拟BASE地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%84%E5%AD%98%E5%99%A8%E8%99%9A%E6%8B%9FBASE%E5%9C%B0%E5%9D%80"><span class="nav-number">4.</span> <span class="nav-text">修改寄存器虚拟BASE地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E5%80%BC"><span class="nav-number">5.</span> <span class="nav-text">获取寄存器的值</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="aeiouaoeiuv"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">aeiouaoeiuv</p>
+  <div class="site-description" itemprop="description">F4F6D30C9442A4F3</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://aeiouaoeiuv.github.io/get-register-value-in-mtk-openwrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="aeiouaoeiuv">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="aeiouaoeiuv">
+      <meta itemprop="description" content="F4F6D30C9442A4F3">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="get-register-value-in-mtk-openwrt | aeiouaoeiuv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          get-register-value-in-mtk-openwrt
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-07-06 16:50:33" itemprop="dateCreated datePublished" datetime="2016-07-06T16:50:33+00:00">2016-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/openwrt/" itemprop="url" rel="index"><span itemprop="name">openwrt</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>datasheet: MT7628_ProgrammingGuide_20140428(E2).pdf</p>
+<span id="more"></span>
+
+<h1 id="确定寄存器物理BASE地址"><a href="#确定寄存器物理BASE地址" class="headerlink" title="确定寄存器物理BASE地址"></a>确定寄存器物理BASE地址</h1><p>根据<code>datasheet</code>的<code>1.3 Memory Map Summary</code>找到<code>SYSCTL</code>的<code>Start</code>地址是： <code>10000000</code>，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> 1.3 Memory Map Summary</span><br><span class="line"></span><br><span class="line">| Start     |   | End       | Size       | Description |</span><br><span class="line">|           |   |           |            |             |</span><br><span class="line">| 0000.0000 | - | 0FFF.FFFF | 256 MBytes | DDR 256 MB  |</span><br><span class="line">| 1000.0000 | - | 1000.00FF | 256 Bytes  | SYSCTL      |</span><br><span class="line">| 1000.0100 | - | 1000.01FF | 256 Bytes  | TIMER       |</span><br></pre></td></tr></table></figure>
+
+<h1 id="确定寄存器物理地址"><a href="#确定寄存器物理地址" class="headerlink" title="确定寄存器物理地址"></a>确定寄存器物理地址</h1><p>比如要查看<code>port 0</code>的<code>Link Status</code>。<br>根据<code>datasheet</code>，找到地址<code>10110080</code>，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> 10110080   POA       Port Ability Offset</span><br><span class="line">| Bit  |   31    |   30    | 29 | 28 | 27 | 26 | 25 | 24 | 23 |</span><br><span class="line">| Name | G1_LINK | G0_LINK |          LINK          | G1_TXC  |</span><br><span class="line">| Type |   RO    |   RO    |           RO           |    RO   |</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------------------------------------------</span><br><span class="line">Bit(s)      Name        Description</span><br><span class="line">----------------------------------------------------------------------------------------------------</span><br><span class="line">  31        G1_LINK     Port 6 Link Status</span><br><span class="line">                        1: Link up</span><br><span class="line">                        0: Link down</span><br><span class="line">  30        G0_LINK     Port 5 Link Status</span><br><span class="line">                        1: Link up</span><br><span class="line">                        0: Link down</span><br><span class="line"> 29:25      LINK        Port 4 ~ Port 0 Link Status</span><br><span class="line">                        1: Link up</span><br><span class="line">                        0: Link down</span><br><span class="line"> 24:23      G1_TXC      Flow Control Status of Port 6</span><br><span class="line">                        The flow control capability status bit after Auto-negotiation or force mode.</span><br><span class="line">                        1xb: full duplex and tx flow control ON</span><br><span class="line">                        x1b: full duplex and rx flow control ON</span><br><span class="line">                        00b: flow control off</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>Port 0</code>的<code>Link Status</code>在<code>25</code>位。</p>
+<h1 id="确定寄存器虚拟BASE地址"><a href="#确定寄存器虚拟BASE地址" class="headerlink" title="确定寄存器虚拟BASE地址"></a>确定寄存器虚拟BASE地址</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># printk打印，dmesg可看</span><br><span class="line">reg s 2</span><br></pre></td></tr></table></figure>
+
+<h1 id="修改寄存器虚拟BASE地址"><a href="#修改寄存器虚拟BASE地址" class="headerlink" title="修改寄存器虚拟BASE地址"></a>修改寄存器虚拟BASE地址</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 根据linux源码/arch/mips/include/asm/mach-ralink/rt_mmap.h的 RALINK_SYSCTL_BASE 而来。</span><br><span class="line">reg s 0xb0000000</span><br><span class="line"></span><br><span class="line"># 或者直接将base切换为system register</span><br><span class="line">reg s 0</span><br></pre></td></tr></table></figure>
+
+<h1 id="获取寄存器的值"><a href="#获取寄存器的值" class="headerlink" title="获取寄存器的值"></a>获取寄存器的值</h1><p>物理地址(0x10110080) - 物理BASE地址(0x10000000) = 偏移量(0x110080)<br>虚拟BASE地址(0xb0000000) + 偏移量(0x110080) = 虚拟地址(0xb0110080)<br>因为<code>reg</code>命令只需要一个偏移量就够了，所以没用到虚拟地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># printk打印，dmesg可看</span><br><span class="line">reg r 110080</span><br><span class="line"></span><br><span class="line"># 获取返回值可以用下面命令，查看reg.c源码有`p`参数</span><br><span class="line">reg p 110080</span><br></pre></td></tr></table></figure>
+
+<p>得到的值再进行<code>与</code>操作，就可以拿到对应端口的<code>Link Status</code>了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+              <a href="/tags/register/" rel="tag"># register</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/luci-translation/" rel="prev" title="luci-translation">
+                  <i class="fa fa-chevron-left"></i> luci-translation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/expand-root-storage-in-vmware/" rel="next" title="expand-root-storage-in-vmware">
+                  expand-root-storage-in-vmware <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2014 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NexT</span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js","integrity":"sha256-7wT34TI0pEBeEFoi4z+vhuSddGh6vUTMWdqJ2SDe2jg="}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/tags/mermaid.min.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.11.0/source/js/third-party/math/mathjax.min.js"></script>
+
+
+
+</body>
+</html>
