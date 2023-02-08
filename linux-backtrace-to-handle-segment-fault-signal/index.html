@@ -29,7 +29,7 @@
 <meta property="og:description" content="jxgz_leoblog.csdn.net&#x2F;jxgz_leo&#x2F;article&#x2F;details&#x2F;53458366 Eearthblog.csdn.net&#x2F;iEearth&#x2F;article&#x2F;details&#x2F;49763481">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-29T09:54:02.000Z">
-<meta property="article:modified_time" content="2023-02-06T02:34:23.751Z">
+<meta property="article:modified_time" content="2023-02-08T01:51:07.907Z">
 <meta property="article:author" content="aeiouaoeiuv">
 <meta property="article:tag" content="backtrace">
 <meta property="article:tag" content="sigsegv">
@@ -339,7 +339,7 @@
 <blockquote><footer><strong>参考文档</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpanpoZW5nL2FydGljbGUvZGV0YWlscy8yMzYxODM2NQ==">blog.csdn.net/lijzheng/article/details/23618365<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
 <br>
 
-<p>可以看到<code>0x55b66341f4ef</code>刚好位于此区间<br>所以该地址(<code>0x55b66341f4ef</code>) - 此区间首地址(<code>0x55b66341f000</code>) + 地址偏移量(<code>0x00001000</code>) = <code>0x14ef</code></p></div><div class="tab-pane" id="查找出错地址-2"><p>上文编译时生成了<code>demo.map</code>文件, 该文件包含很多信息, 直接搜索<code>GenerateError</code>得到如下信息</p>
+<p>可以看到<code>0x55b66341f4ef</code>刚好位于此区间<br>所以该地址(<code>0x55b66341f4ef</code>) - 此区间首地址(<code>0x55b66341f000</code>) + 地址偏移量(<code>0x00001000</code>) &#x3D; <code>0x14ef</code></p></div><div class="tab-pane" id="查找出错地址-2"><p>上文编译时生成了<code>demo.map</code>文件, 该文件包含很多信息, 直接搜索<code>GenerateError</code>得到如下信息</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">    0x00000000000012e9                ShowBacktrace(int)</span><br><span class="line">    0x00000000000014bd                GenerateError()</span><br><span class="line">    0x00000000000014f2                main</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 
 <p>可知<code>GenerateError</code>的地址为<code>0x14bd</code>, 再加上上面的偏移地址<code>0x32</code>, 得到<code>0x14bd + 0x32 = 0x14ef</code></p></div></div></div>

@@ -29,7 +29,7 @@
 <meta property="og:description" content="cnblogswww.cnblogs.com&#x2F;barrychiao&#x2F;archive&#x2F;2012&#x2F;10&#x2F;22&#x2F;2733210.html gnuwww.gnu.org&#x2F;savannah-checkouts&#x2F;gnu&#x2F;bash&#x2F;manual&#x2F;bash.html#Shell-Parameter-Expansion">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-06-13T03:59:55.000Z">
-<meta property="article:modified_time" content="2023-02-06T02:34:23.755Z">
+<meta property="article:modified_time" content="2023-02-08T01:51:07.907Z">
 <meta property="article:author" content="aeiouaoeiuv">
 <meta property="article:tag" content="shell">
 <meta property="article:tag" content="bash">
@@ -284,7 +284,7 @@
 <td>返回变量值，推荐这种写法，代码可读性更好，避免歧义</td>
 </tr>
 <tr>
-<td>${&#35;var}</td>
+<td>${&amp;#35;var}</td>
 <td>返回字符串长度，如<code>var=&quot;Barry&quot;</code>，则返回<code>5</code></td>
 </tr>
 <tr>
@@ -316,7 +316,7 @@
 <td>如果<code>var</code>为空值或未定义，则返回<code>newstring</code><br>如果<code>var</code>不为空，则返回原值</td>
 </tr>
 <tr>
-<td>${var:=newstring}</td>
+<td>${var:&#x3D;newstring}</td>
 <td>如果<code>var</code>为空值或未定义，则返回<code>newstring</code>，并把<code>newstring</code>赋值给<code>var</code><br>如果<code>var</code>不为空，则返回原值</td>
 </tr>
 <tr>
@@ -328,11 +328,11 @@
 <td>如果<code>var</code>为空值或未定义，则将<code>newstring</code>写入标准错误流，本语句失败<br>如果<code>var</code>不为空则返回原值</td>
 </tr>
 <tr>
-<td>${var/substring/newstring}</td>
+<td>${var&#x2F;substring&#x2F;newstring}</td>
 <td>返回<code>var</code>中第一个<code>substring</code>被替换成<code>newstring</code>后的字符串。<br>如<code>var=088880</code><br><code>$&#123;var/0/Barry&#125;</code>返回<code>Barry88880</code></td>
 </tr>
 <tr>
-<td>${var//substring/newstring}</td>
+<td>${var&#x2F;&#x2F;substring&#x2F;newstring}</td>
 <td>返回<code>var</code>中所有的<code>substring</code>被替换成<code>newstring</code>后的字符串。<br>如<code>var=088880</code><br><code>$&#123;var//0/Barry&#125;</code>返回<code>Barry8888Barry</code></td>
 </tr>
 <tr>
