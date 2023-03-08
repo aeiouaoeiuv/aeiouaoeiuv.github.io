@@ -66,16 +66,13 @@
     <content><![CDATA[<blockquote><footer><strong>jianshu</strong><cite><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9lMmRjMjJhOGM2OTA=">www.jianshu.com/p/e2dc22a8c690<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
 <span id="more"></span>
 
-<h1 id="install-adb"><a href="#install-adb" class="headerlink" title="install adb"></a>install adb</h1>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install android-tools-adb</span><br></pre></td></tr></table></figure>
-
+<h1 id="install-adb"><a href="#install-adb" class="headerlink" title="install adb"></a>install adb</h1><p>  <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYW5kcm9pZC5jb20vc3R1ZGlvL3JlbGVhc2VzL3BsYXRmb3JtLXRvb2xz">download site<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="check-VID-amp-PID"><a href="#check-VID-amp-PID" class="headerlink" title="check VID &amp; PID"></a>check VID &amp; PID</h1><p>  <code>lsusb</code>, displayed such as:</p>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Bus 001 Device 003: ID 1234:5678</span><br><span class="line"><span class="comment"># 0x1234 is VID</span></span><br><span class="line"><span class="comment"># 0x5678 is PID</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="adb-usb-ini"><a href="#adb-usb-ini" class="headerlink" title="adb_usb.ini"></a>adb_usb.ini</h1>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;0x1234&quot; &gt; $HOME/.android/adb_usb.ini</span><br></pre></td></tr></table></figure>
+<h1 id="add-permission"><a href="#add-permission" class="headerlink" title="add permission"></a>add permission</h1>  <figure class="highlight txt"><figcaption><span>/etc/udev/rules.d/90-android.rules</span></figcaption><table><tr><td class="code"><pre><span class="line">SUBSYSTEM==&quot;usb&quot;,ATTRS&#123;idVendor&#125;==&quot;1234&quot;,ATTRS&#123;idProduct&#125;==&quot;5678&quot;,MODE=&quot;0666&quot;,GROUP=&quot;plugdev&quot;,SYMLINK+=&quot;android&quot;,SYMLINK+=&quot;android_adb&quot;</span><br></pre></td></tr></table></figure>
 
-<h1 id="add-permission"><a href="#add-permission" class="headerlink" title="add permission"></a>add permission</h1>  <figure class="highlight txt"><figcaption><span>/etc/udev/rules.d/70-android.rules</span></figcaption><table><tr><td class="code"><pre><span class="line">SUBSYSTEM==&quot;usb&quot;, ATTRS&#123;idVendor&#125;==&quot;1234&quot;, ATTRS&#123;idProduct&#125;==&quot;5678&quot;,MODE=&quot;0666&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="restart-usb-service"><a href="#restart-usb-service" class="headerlink" title="restart usb service"></a>restart usb service</h1>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chmod a+rx /etc/udev/rules.d/70-android.rules</span><br><span class="line">sudo service udev restart</span><br></pre></td></tr></table></figure>
+<h1 id="restart-usb-service"><a href="#restart-usb-service" class="headerlink" title="restart usb service"></a>restart usb service</h1>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo udevadm control --reload-rules</span><br><span class="line">sudo service udev restart</span><br><span class="line">sudo udevadm trigger</span><br><span class="line">adb kill-server</span><br><span class="line">adb start-server</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
