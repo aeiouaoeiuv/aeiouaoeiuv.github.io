@@ -29,7 +29,7 @@
 <meta property="og:description" content="Ref:www.jianshu.com&#x2F;p&#x2F;01bfce3239e6">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-20T17:31:32.000Z">
-<meta property="article:modified_time" content="2023-03-08T02:14:19.883Z">
+<meta property="article:modified_time" content="2023-04-10T07:59:46.396Z">
 <meta property="article:author" content="aeiouaoeiuv">
 <meta property="article:tag" content="ubuntu">
 <meta property="article:tag" content="rime">
@@ -163,7 +163,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -267,11 +267,17 @@
         <blockquote><footer><strong>Ref:</strong><cite><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8wMWJmY2UzMjM5ZTY=">www.jianshu.com/p/01bfce3239e6<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
 <span id="more"></span>
 
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ibus-rime</span><br></pre></td></tr></table></figure>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt -y install ibus-rime</span><br></pre></td></tr></table></figure>
 
-<h1 id="Rime-Config"><a href="#Rime-Config" class="headerlink" title="Rime Config"></a>Rime Config</h1>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jayknoxqu/ibus-rime.git <span class="variable">$HOME</span>/.config/ibus/rime</span><br></pre></td></tr></table></figure>
+<h1 id="Rime-Config"><a href="#Rime-Config" class="headerlink" title="Rime Config"></a>Rime Config</h1><strike>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jayknoxqu/ibus-rime.git <span class="variable">$HOME</span>/.config/ibus/rime</span><br></pre></td></tr></table></figure>
 
   <figure class="highlight yaml"><figcaption><span>$HOME/.config/ibus/rime/default.custom.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">patch:</span></span><br><span class="line">  <span class="attr">schema_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">schema:</span> <span class="string">luna_pinyin_simp</span></span><br></pre></td></tr></table></figure>
+</strike>
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/iDvel/rime-ice.git <span class="variable">$HOME</span>/.config/ibus/rime</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight yaml"><figcaption><span>$HOME/.config/ibus/rime/ibus_rime.custom.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">patch:</span></span><br><span class="line">  <span class="attr">style/horizontal:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="Ubuntu-Config"><a href="#Ubuntu-Config" class="headerlink" title="Ubuntu Config"></a>Ubuntu Config</h1>  <div class="tabs" id="ubuntu-os"><ul class="nav-tabs"><li class="tab active"><a href="#ubuntu-os-1">Ubuntu 16.04</a></li><li class="tab"><a href="#ubuntu-os-2">Ubuntu 20.04</a></li><li class="tab"><a href="#ubuntu-os-3">Ubuntu 22.04</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ubuntu-os-1"><p><code>System Settings</code> -&gt; <code>Text Entry</code> -&gt; <code>Input sources to use</code> -&gt; add as below:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">English(US)</span><br><span class="line">Chinese(Rime)(IBus)</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="ubuntu-os-2"><p><code>Settings</code> -&gt; <code>Region &amp; Language</code> -&gt; <code>Input Sources</code> -&gt; add as below:</p>
