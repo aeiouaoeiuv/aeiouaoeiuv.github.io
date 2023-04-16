@@ -1064,6 +1064,33 @@
       </tags>
   </entry>
   <entry>
+    <title>install-rootless-docker-on-ubuntu</title>
+    <url>/install-rootless-docker-on-ubuntu/</url>
+    <content><![CDATA[<blockquote><footer><strong>Ref</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vZW5naW5lL3NlY3VyaXR5L3Jvb3RsZXNz">docs.docker.com/engine/security/rootless<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
+
+<span id="more"></span>
+
+<h1 id="Install-docker"><a href="#Install-docker" class="headerlink" title="Install docker"></a>Install docker</h1><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vZW5naW5lL2luc3RhbGwvdWJ1bnR1">link<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="Install-depends"><a href="#Install-depends" class="headerlink" title="Install depends"></a>Install depends</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get -y install uidmap dbus-user-session</span><br></pre></td></tr></table></figure>
+
+<h1 id="Disable-docker-service"><a href="#Disable-docker-service" class="headerlink" title="Disable docker service"></a>Disable docker service</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl disable --now docker.service docker.socket</span><br></pre></td></tr></table></figure>
+
+<h1 id="User-environment-setup"><a href="#User-environment-setup" class="headerlink" title="User environment setup"></a>User environment setup</h1><figure class="highlight bash"><figcaption><span>$HOME/.bashrc</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> DOCKER_HOST=unix://<span class="variable">$XDG_RUNTIME_DIR</span>/docker.sock</span><br></pre></td></tr></table></figure>
+
+<h1 id="Install-rootless-docker"><a href="#Install-rootless-docker" class="headerlink" title="Install rootless docker"></a>Install rootless docker</h1><p>Running this command in <code>USER</code> account. Do not use <code>su -</code> to switch account to run this command.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dockerd-rootless-setuptool.sh install</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ubuntu</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>rootless</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>install-tig-with-wide-char</title>
     <url>/install-tig-with-wide-char/</url>
     <content><![CDATA[<h1 id="install-ncurses"><a href="#install-ncurses" class="headerlink" title="install ncurses"></a>install ncurses</h1><span id="more"></span>
@@ -2353,6 +2380,69 @@ exec &quot;$@&quot;
       </tags>
   </entry>
   <entry>
+    <title>ubuntu-20.04-proxy-settings</title>
+    <url>/ubuntu-20-04-proxy-settings/</url>
+    <content><![CDATA[<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install libssl-dev libsodium-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="克隆shadowsocksr"><a href="#克隆shadowsocksr" class="headerlink" title="克隆shadowsocksr"></a>克隆shadowsocksr</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:aeiouaoeiuv/shadowsocksr.git $HOME/.local/share/shadowsocksr</span><br></pre></td></tr></table></figure>
+<details class="note info"><summary><p>可选</p>
+</summary>
+<p>使用加密节点：切换至<code>manyuser_gpg_config_file</code>分支。</p>
+
+</details>
+
+<h1 id="下载ssr脚本"><a href="#下载ssr脚本" class="headerlink" title="下载ssr脚本"></a>下载ssr脚本</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -c https://raw.githubusercontent.com/aeiouaoeiuv/recipes/master/shell/ssr -O $HOME/.local/bin/ssr</span><br></pre></td></tr></table></figure>
+
+<p>将其放至在<code>$HOME/.local/bin</code>，或者其他<code>$PATH</code>中包含的路径，方便使用而已。</p>
+<details class="note info"><summary><p>可选</p>
+</summary>
+<p>使用加密节点：手动将<code>ssr</code>文件顶部的<code>CONFIG_FILE_ENCRYPTED</code>改为<code>true</code>。</p>
+
+</details>
+
+<h1 id="修改节点"><a href="#修改节点" class="headerlink" title="修改节点"></a>修改节点</h1><p><code>vim $HOME/.local/share/shadowsocksr/config.json</code>修改成大致如下，具体内容根据你获得的<code>vpn</code>节点填写。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;timeout&quot;: 300,</span><br><span class="line">    &quot;workers&quot;: 1,</span><br><span class="line">    &quot;server_port&quot;: XXXXXX,</span><br><span class="line">    &quot;password&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;method&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;obfs&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;obfs_param&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;protocol&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;protocol_param&quot;: &quot;XXXXXX&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<details class="note info"><summary><p>可选</p>
+</summary>
+<p>使用加密节点：使用<code>gpg</code>命令对节点内容加密后，再填入该<code>config.json</code>中。</p>
+
+</details>
+
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssr start</span><br></pre></td></tr></table></figure>
+
+<p>成功运行打印大致如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IPv6 support</span><br><span class="line">2021-09-07 17:17:20 INFO     util.py:85 loading libsodium from libsodium.so.23</span><br><span class="line">started</span><br><span class="line">Testing Connection...</span><br><span class="line">jq in use</span><br><span class="line">connection information:</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Checking delay...</span><br><span class="line">[proxychains] config file found: /usr/local/etc/proxychains.conf</span><br><span class="line">[proxychains] preloading /usr/local/lib/libproxychains4.so</span><br><span class="line">PING cip.cc (122.51.162.249) 56(84) bytes of data.</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=1 ttl=49 time=31.3 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=2 ttl=49 time=31.1 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=3 ttl=49 time=31.5 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=4 ttl=49 time=31.3 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=5 ttl=49 time=31.2 ms</span><br><span class="line"></span><br><span class="line">--- cip.cc ping statistics ---</span><br><span class="line">5 packets transmitted, 5 received, 0% packet loss, time 13052ms</span><br><span class="line">rtt min/avg/max/mdev = 31.074/31.274/31.487/0.133 ms</span><br></pre></td></tr></table></figure>
+
+<h1 id="命令行代理"><a href="#命令行代理" class="headerlink" title="命令行代理"></a>命令行代理</h1><p>可使用<code>proxychains4</code>，如之前的一篇文章<a href="/proxychains/" title="proxychains">proxychains</a></p>
+<h1 id="系统代理"><a href="#系统代理" class="headerlink" title="系统代理"></a>系统代理</h1><p><code>chrome</code>浏览网页需要设置系统代理。</p>
+<h2 id="GUI方式修改"><a href="#GUI方式修改" class="headerlink" title="GUI方式修改"></a>GUI方式修改</h2><p>依次选择：<code>Settings</code> -&gt; <code>Network</code> -&gt; <code>Network Proxy</code> -&gt; <code>Manual</code></p>
+<p>修改如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">┌───────────────────────────────────────────────────────────────┐</span><br><span class="line">│                         Network Proxy                         │</span><br><span class="line">├───────────────────────────────────────────────────────────────┤</span><br><span class="line">│                                                               │</span><br><span class="line">│ [ ] Automatic                                                 │</span><br><span class="line">│ [x] Manual                                                    │</span><br><span class="line">│ [ ] Disabled                                                  │</span><br><span class="line">│                                                               │</span><br><span class="line">│      HTTP Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│     HTTPS Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│       FTP Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│     Socks Proxy [ 127.0.0.1             ] [ 1080 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│    Ignore Hosts [                                        ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">└───────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>HTTP</code>、<code>HTTPS</code>和<code>FTP</code>：这里不用填，否则会无法访问网页。</li>
+<li><code>Socks</code>：这里必填。</li>
+<li><code>Ignore</code>：这里不能出现<code>127.0.0.1</code>或者<code>127.0.0.0/8</code>，否则也无法访问网页。</li>
+</ul>
+<h2 id="命令行方式修改"><a href="#命令行方式修改" class="headerlink" title="命令行方式修改"></a>命令行方式修改</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dconf write /system/proxy/mode &quot;&#x27;manual&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/http/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/http/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/https/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/https/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/ftp/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/ftp/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/socks/host &quot;&#x27;127.0.0.1&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/socks/port &quot;1080&quot;</span><br><span class="line">dconf write /system/proxy/ignore-hosts &quot;@as []&quot;</span><br></pre></td></tr></table></figure>
+
+<p>关闭代理使用这个命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dconf write /system/proxy/mode &quot;&#x27;none&#x27;&quot;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ubuntu</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>proxy</tag>
+        <tag>ssr</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ubuntu-change-terminal-config-by-command</title>
     <url>/ubuntu-change-terminal-config-by-command/</url>
     <content><![CDATA[<blockquote><footer><strong>askubuntu</strong><cite><span class="exturl" data-url="aHR0cHM6Ly9hc2t1YnVudHUuY29tL3F1ZXN0aW9ucy80ODcyMDYvZGNvbmYtY2hhbmdlLWEtc3RyaW5nLWtleSNhbnN3ZXItNDg3MjE2">askubuntu.com/questions/487206/dconf-change-a-string-key#answer-487216<i class="fa fa-external-link-alt"></i></span></cite></footer></blockquote>
@@ -2457,69 +2547,6 @@ exec &quot;$@&quot;
       <tags>
         <tag>ubuntu</tag>
         <tag>rime</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu-20.04-proxy-settings</title>
-    <url>/ubuntu-20-04-proxy-settings/</url>
-    <content><![CDATA[<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install libssl-dev libsodium-dev</span><br></pre></td></tr></table></figure>
-
-<h1 id="克隆shadowsocksr"><a href="#克隆shadowsocksr" class="headerlink" title="克隆shadowsocksr"></a>克隆shadowsocksr</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:aeiouaoeiuv/shadowsocksr.git $HOME/.local/share/shadowsocksr</span><br></pre></td></tr></table></figure>
-<details class="note info"><summary><p>可选</p>
-</summary>
-<p>使用加密节点：切换至<code>manyuser_gpg_config_file</code>分支。</p>
-
-</details>
-
-<h1 id="下载ssr脚本"><a href="#下载ssr脚本" class="headerlink" title="下载ssr脚本"></a>下载ssr脚本</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -c https://raw.githubusercontent.com/aeiouaoeiuv/recipes/master/shell/ssr -O $HOME/.local/bin/ssr</span><br></pre></td></tr></table></figure>
-
-<p>将其放至在<code>$HOME/.local/bin</code>，或者其他<code>$PATH</code>中包含的路径，方便使用而已。</p>
-<details class="note info"><summary><p>可选</p>
-</summary>
-<p>使用加密节点：手动将<code>ssr</code>文件顶部的<code>CONFIG_FILE_ENCRYPTED</code>改为<code>true</code>。</p>
-
-</details>
-
-<h1 id="修改节点"><a href="#修改节点" class="headerlink" title="修改节点"></a>修改节点</h1><p><code>vim $HOME/.local/share/shadowsocksr/config.json</code>修改成大致如下，具体内容根据你获得的<code>vpn</code>节点填写。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;timeout&quot;: 300,</span><br><span class="line">    &quot;workers&quot;: 1,</span><br><span class="line">    &quot;server_port&quot;: XXXXXX,</span><br><span class="line">    &quot;password&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;method&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;obfs&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;obfs_param&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;protocol&quot;: &quot;XXXXXX&quot;,</span><br><span class="line">    &quot;protocol_param&quot;: &quot;XXXXXX&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<details class="note info"><summary><p>可选</p>
-</summary>
-<p>使用加密节点：使用<code>gpg</code>命令对节点内容加密后，再填入该<code>config.json</code>中。</p>
-
-</details>
-
-<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssr start</span><br></pre></td></tr></table></figure>
-
-<p>成功运行打印大致如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IPv6 support</span><br><span class="line">2021-09-07 17:17:20 INFO     util.py:85 loading libsodium from libsodium.so.23</span><br><span class="line">started</span><br><span class="line">Testing Connection...</span><br><span class="line">jq in use</span><br><span class="line">connection information:</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Checking delay...</span><br><span class="line">[proxychains] config file found: /usr/local/etc/proxychains.conf</span><br><span class="line">[proxychains] preloading /usr/local/lib/libproxychains4.so</span><br><span class="line">PING cip.cc (122.51.162.249) 56(84) bytes of data.</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=1 ttl=49 time=31.3 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=2 ttl=49 time=31.1 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=3 ttl=49 time=31.5 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=4 ttl=49 time=31.3 ms</span><br><span class="line">64 bytes from 122.51.162.249: icmp_seq=5 ttl=49 time=31.2 ms</span><br><span class="line"></span><br><span class="line">--- cip.cc ping statistics ---</span><br><span class="line">5 packets transmitted, 5 received, 0% packet loss, time 13052ms</span><br><span class="line">rtt min/avg/max/mdev = 31.074/31.274/31.487/0.133 ms</span><br></pre></td></tr></table></figure>
-
-<h1 id="命令行代理"><a href="#命令行代理" class="headerlink" title="命令行代理"></a>命令行代理</h1><p>可使用<code>proxychains4</code>，如之前的一篇文章<a href="/proxychains/" title="proxychains">proxychains</a></p>
-<h1 id="系统代理"><a href="#系统代理" class="headerlink" title="系统代理"></a>系统代理</h1><p><code>chrome</code>浏览网页需要设置系统代理。</p>
-<h2 id="GUI方式修改"><a href="#GUI方式修改" class="headerlink" title="GUI方式修改"></a>GUI方式修改</h2><p>依次选择：<code>Settings</code> -&gt; <code>Network</code> -&gt; <code>Network Proxy</code> -&gt; <code>Manual</code></p>
-<p>修改如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">┌───────────────────────────────────────────────────────────────┐</span><br><span class="line">│                         Network Proxy                         │</span><br><span class="line">├───────────────────────────────────────────────────────────────┤</span><br><span class="line">│                                                               │</span><br><span class="line">│ [ ] Automatic                                                 │</span><br><span class="line">│ [x] Manual                                                    │</span><br><span class="line">│ [ ] Disabled                                                  │</span><br><span class="line">│                                                               │</span><br><span class="line">│      HTTP Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│     HTTPS Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│       FTP Proxy [                       ] [    0 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│     Socks Proxy [ 127.0.0.1             ] [ 1080 | - | + ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">│    Ignore Hosts [                                        ]    │</span><br><span class="line">│                                                               │</span><br><span class="line">└───────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>HTTP</code>、<code>HTTPS</code>和<code>FTP</code>：这里不用填，否则会无法访问网页。</li>
-<li><code>Socks</code>：这里必填。</li>
-<li><code>Ignore</code>：这里不能出现<code>127.0.0.1</code>或者<code>127.0.0.0/8</code>，否则也无法访问网页。</li>
-</ul>
-<h2 id="命令行方式修改"><a href="#命令行方式修改" class="headerlink" title="命令行方式修改"></a>命令行方式修改</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dconf write /system/proxy/mode &quot;&#x27;manual&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/http/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/http/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/https/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/https/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/ftp/host &quot;&#x27;&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/ftp/port &quot;0&quot;</span><br><span class="line">dconf write /system/proxy/socks/host &quot;&#x27;127.0.0.1&#x27;&quot;</span><br><span class="line">dconf write /system/proxy/socks/port &quot;1080&quot;</span><br><span class="line">dconf write /system/proxy/ignore-hosts &quot;@as []&quot;</span><br></pre></td></tr></table></figure>
-
-<p>关闭代理使用这个命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dconf write /system/proxy/mode &quot;&#x27;none&#x27;&quot;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>ubuntu</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>proxy</tag>
-        <tag>ssr</tag>
       </tags>
   </entry>
   <entry>
