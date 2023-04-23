@@ -1352,6 +1352,33 @@
       </tags>
   </entry>
   <entry>
+    <title>markdown-to-html-to-pdf</title>
+    <url>/markdown-to-html-to-pdf/</url>
+    <content><![CDATA[<p>平时习惯用<code>markdown</code>写些文档，偶尔需要转成<code>pdf</code>文件。<br>故此文档根据自身习惯，记录了一套从<code>markdown</code>转<code>html</code>文件，再转<code>pdf</code>的流程。</p>
+<span id="more"></span>
+
+<h1 id="Markdown转HTML"><a href="#Markdown转HTML" class="headerlink" title="Markdown转HTML"></a>Markdown转HTML</h1><p>平时编辑<code>markdown</code>文件更多是使用<code>vscode</code>，所以安装插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在vscode里Ctrl+P输入如下内容</span></span><br><span class="line">ext install shd101wyy.markdown-preview-enhanced</span><br></pre></td></tr></table></figure>
+
+<p>接下来是该插件的配置：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;markdown-preview-enhanced.previewTheme&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue.css&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;markdown-preview-enhanced.codeBlockTheme&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue.css&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;markdown-preview-enhanced.printBackground&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;markdown-preview-enhanced.enableExtendedTableSyntax&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>使用的是<code>vue</code>样式。<br>编辑<code>markdown</code>文件时打开预览-&gt;预览窗口右键-&gt;<code>HTML</code>-&gt;<code>HTML(offline)</code>，即可生成<code>html</code>文件。</p>
+<h1 id="HTML转PDF"><a href="#HTML转PDF" class="headerlink" title="HTML转PDF"></a>HTML转PDF</h1><p>直接使用该<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FlaW91YW9laXV2L2h0bWxfdG9fcGRm">仓库<i class="fa fa-external-link-alt"></i></span>，按照<code>README.md</code>的说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./convert.py test.html test.pdf</span><br></pre></td></tr></table></figure>
+
+<p>该仓库使用了<code>weasyprint</code>模块，内部已经添加了开源的<code>Noto Sans CJK SC</code>中文字体。<br>尝试过其他库或谷歌浏览器直接转<code>pdf</code>文件的方式，目前发现只有<code>weasyprint</code>转出来的效果最接近原来的<code>html</code>文件。</p>
+]]></content>
+      <categories>
+        <category>ubuntu</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+        <tag>html</tag>
+        <tag>pdf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mtk-openwrt-change-mac-by-command</title>
     <url>/mtk-openwrt-change-mac-by-command/</url>
     <content><![CDATA[<h1 id="2-4G-MAC"><a href="#2-4G-MAC" class="headerlink" title="2.4G MAC"></a>2.4G MAC</h1><span id="more"></span>
