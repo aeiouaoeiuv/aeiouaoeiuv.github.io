@@ -2491,6 +2491,29 @@ exec &quot;$@&quot;
       </tags>
   </entry>
   <entry>
+    <title>ubuntu-install-nvidia-driver</title>
+    <url>/ubuntu-install-nvidia-driver/</url>
+    <content><![CDATA[<h1 id="查看显卡型号"><a href="#查看显卡型号" class="headerlink" title="查看显卡型号"></a>查看显卡型号</h1><span id="more"></span>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lspci | grep -i vga</span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation Device 4c8a (rev 04)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation Device 2504 (rev a1)</span><br></pre></td></tr></table></figure>
+
+<p>得到十六进制值：<code>2504</code></p>
+<h1 id="查看真实显卡型号"><a href="#查看真实显卡型号" class="headerlink" title="查看真实显卡型号"></a>查看真实显卡型号</h1><p>访问<span class="exturl" data-url="aHR0cHM6Ly9hZG1pbi5wY2ktaWRzLnVjdy5jei9tb2RzL1BDLzEwZGU/YWN0aW9uPWhlbHA/aGVscD1wY2k=">这里<i class="fa fa-external-link-alt"></i></span></p>
+<p>输入上面得到的十六进制值</p>
+<p>点击<code>jump</code></p>
+<p>得到真实型号：<code>GA106 [GeForce RTX 3060 Lite Hash Rate]</code></p>
+<h1 id="下载驱动"><a href="#下载驱动" class="headerlink" title="下载驱动"></a>下载驱动</h1><p>去<span class="exturl" data-url="aHR0cHM6Ly93d3cubnZpZGlhLmNvbS9Eb3dubG9hZC9pbmRleC5hc3B4">这里<i class="fa fa-external-link-alt"></i></span>选择对应驱动并下载安装即可</p>
+]]></content>
+      <categories>
+        <category>ubuntu</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>nvidia</tag>
+        <tag>driver</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ubuntu-install-pppoe-server</title>
     <url>/ubuntu-install-pppoe-server/</url>
     <content><![CDATA[<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><span id="more"></span>
