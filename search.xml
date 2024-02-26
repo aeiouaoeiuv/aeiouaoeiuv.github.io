@@ -2710,11 +2710,12 @@ exec &quot;$@&quot;
 <h1 id="测试程序编译"><a href="#测试程序编译" class="headerlink" title="测试程序编译"></a>测试程序编译</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">aarch64-linux-gcc -g demo.c -o /tmp/demo</span><br></pre></td></tr></table></figure>
 
 <p>需要添加<code>-g</code>参数，并且不要<code>strip</code></p>
-<h1 id="交叉编译valgrind"><a href="#交叉编译valgrind" class="headerlink" title="交叉编译valgrind"></a>交叉编译valgrind</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git://sourceware.org/git/valgrind.git</span><br><span class="line">cd valgrind/</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure --prefix=$&#123;PWD&#125;/install --host=aarch64-linux CC=aarch64-linux-gcc CXX=aarch64-linux-g++ AR=aarch64-linux-ar</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h1 id="交叉编译valgrind"><a href="#交叉编译valgrind" class="headerlink" title="交叉编译valgrind"></a>交叉编译valgrind</h1><p>当前使用的版本是<code>de2cd7f6f9ad06fbe390d37503557718ec15fab4</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git://sourceware.org/git/valgrind.git</span><br><span class="line">cd valgrind/</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure --prefix=$&#123;PWD&#125;/install --host=aarch64-linux CC=aarch64-linux-gcc CXX=aarch64-linux-g++ AR=aarch64-linux-ar</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
 <p>如果是其他平台，<code>--host</code>部分可参考<code>./configure</code>文件内部的<code>case &quot;$&#123;host_cpu&#125;&quot; in</code>部分修改</p>
-<h1 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h1><p><code>install/lib/</code>里面的库和程序不要<code>strip</code>,否则会丢失部分关键信息。<br>copy <code>install/bin/valgrind</code> and <code>install/lib/</code> to device, for example <code>/tmp</code><br>and run as</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">export PATH=$PATH:/tmp/valgrind/bin</span><br><span class="line">export VALGRIND_LIB=/tmp/libexec/valgrind</span><br><span class="line">valgrind --tool=memcheck --leak-check=full ./demo</span><br></pre></td></tr></table></figure>
+<h1 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h1><p><code>install</code>里面的库和程序不要<code>strip</code>,否则会丢失部分关键信息。<br>拷贝整个<code>install</code>目录到设备的<code>/tmp</code>目录<br>然后在设备运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp/install</span><br><span class="line">export PATH=$PATH:$PWD/bin</span><br><span class="line">export VALGRIND_LIB=$PWD/libexec/valgrind</span><br><span class="line">valgrind --tool=memcheck --leak-check=full ./demo</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>linux</category>
