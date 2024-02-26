@@ -2714,7 +2714,7 @@ exec &quot;$@&quot;
 
 <p>如果是其他平台，<code>--host</code>部分可参考<code>./configure</code>文件内部的<code>case &quot;$&#123;host_cpu&#125;&quot; in</code>部分修改</p>
 <h1 id="程序运行"><a href="#程序运行" class="headerlink" title="程序运行"></a>程序运行</h1><p><code>install/lib/</code>里面的库和程序不要<code>strip</code>,否则会丢失部分关键信息。<br>copy <code>install/bin/valgrind</code> and <code>install/lib/</code> to device, for example <code>/tmp</code><br>and run as</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">export VALGRIND_LIB=/tmp/lib/valgrind</span><br><span class="line">./valgrind --tool=memcheck --leak-check=full ./demo</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">export PATH=$PATH:/tmp/valgrind/bin</span><br><span class="line">export VALGRIND_LIB=/tmp/libexec/valgrind</span><br><span class="line">valgrind --tool=memcheck --leak-check=full ./demo</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>linux</category>
